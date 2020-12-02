@@ -1,5 +1,5 @@
 const Invoice = require('../models/invoiceModel')
-
+const FireInsurance = require('../models/fireInsuranceModel')
 
 class InvoiceController {
     static async getAll(req,res) {
@@ -27,13 +27,28 @@ class InvoiceController {
             district: req.body.district, //kabupaten
             region: req.body.region,
             earthquake: req.body.earthquake || 'no',
-            status: 'pending',
+            status: 'checkout',
             customerId: req.UserData._id,
-            insurancePremium: req.body.insurancePremium
+            // insurancePremium: req.body.insurancePremium
         }
         console.log(params,'create invoice');
         const add = await Invoice.add(params)
         res.status(201).json(add)
+    }
+    static async getCheckout(req,res) {
+        // get trx id from insertedId as json response from checkout above
+        const checkout = await Invoice.getById(req.params.id)
+        console.log(checkout);
+        const insuranceParams = await FireInsurance.getByOccupation(checkout.occupation) // should be getById, will fix later if time allows
+        checkout.insurancePremium = ((checkout.propertyPrice * insuranceParams.insuranceRate) / (1000 * checkout.coveragePeriod)) + 10000
+        const writeCheckout = await Invoice.edit(req.params.id, checkout)
+        res.status(200).json(checkout)
+    }
+    static async submitCheckout(req,res) {
+        const submit = await Invoice.getById(req.params.id)
+        submit.status = 'pending'
+        // submit.insurancePremium = req.body.insurancePremium
+        res.status(200).json(submit)
     }
     static async approveRequest(req,res) {
         let request = await Invoice.getById(req.params.id)

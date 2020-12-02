@@ -18,6 +18,8 @@ route.get('/dev/invoice', InvoiceController.getAll)
 // Customer
 route.post('/invoice', authentication, customerAuth, InvoiceController.create)
 route.get('/invoice', authentication, customerAuth, InvoiceController.getAllCustomer)
+route.get('/invoice/checkout/:id', authentication, customerAuth, InvoiceController.getCheckout)
+route.get('/invoice/checkout/submit/:id', authentication, customerAuth, InvoiceController.submitCheckout)
 // Admin
 route.get('/admin/invoice', authentication, adminAuth, InvoiceController.getAllPending)
 route.get('/admin/invoice/approve/:id', authentication, adminAuth, InvoiceController.approveRequest)

@@ -1,5 +1,6 @@
 // every type of insurance insurance has different properties and therefore should be considered a standalone object
 
+const { ObjectId } = require("mongodb");
 const db = require("../config/mongo");
 const fireInsurance = db.collection('firefireInsurance')
 
@@ -12,6 +13,9 @@ class FireInsuranceModel {
     }
     static getById(id) {
         return fireInsurance.findOne({ _id: ObjectId(id) })
+    }
+    static getByOccupation(occupation) {
+        return fireInsurance.findOne({ occupationType: occupation })
     }
     static edit(id,params) {
         return fireInsurance.replaceOne( { _id: ObjectId(id) }, params )
