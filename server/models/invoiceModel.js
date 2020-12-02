@@ -1,9 +1,16 @@
+const { ObjectId } = require("mongodb");
 const db = require("../config/mongo");
 const invoice = db.collection('invoice')
 
 class invoiceModel {
     static findAll() {
         return invoice.find().toArray()
+    }
+    static findAllPending() {
+        return invoice.find({ status: 'pending' }).toArray()
+    }
+    static findAllCustomer(id) {
+        return invoice.find({ customerId: ObjectId(id) }).toArray()
     }
     static add(payload) {
         return invoice.insertOne(payload)

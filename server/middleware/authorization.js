@@ -1,12 +1,12 @@
 const User = require('../models/userModel')
 
 const adminAuth = (req,res,next) => {
-    // console.log(req.UserData);
-    const {id} = req.UserData
+    console.log(req.UserData, 'userdata');
+    const {_id} = req.UserData
     // console.log(id);
-    User.getById(id)
+    User.getById(_id)
     .then(result => {
-        // console.log(result, 'ini findbypk');
+        console.log(result, 'ini findbypk');
         if (result && result.role === 'admin') {
             next()
         } else {
@@ -20,9 +20,9 @@ const adminAuth = (req,res,next) => {
 
 const customerAuth = (req,res,next) => {
     // console.log(req.UserData);
-    const {id} = req.UserData
+    const {_id} = req.UserData
     // console.log(id);
-    User.getById(id)
+    User.getById(_id)
     .then(result => {
         // console.log(result, 'ini findbypk');
         if (result && result.role === 'customer') {

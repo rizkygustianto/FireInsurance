@@ -7,28 +7,30 @@ class UserController {
     static async register(req,res) {
         const params = {
             email: req.body.email,
+            name: req.body.name,
             password: req.body.password,
             role: req.body.role || 'customer'
         }
-
+        console.log(params);
         // salting & hashing
         const salt = bcrypt.genSaltSync(8)
         const hash = bcrypt.hashSync(params.password, salt)
         params.password = hash
-
+        console.log(params, 'register')
         const add = User.add(params)
         res.status(201).json(add)
     }
     static async login(req,res) {
         let { email,password } = req.body
         let user = await User.getByEmail(email)
+        console.log(user);
         if (!user) {
             return res.status(401).json({msg: 'Invalid email/password'})
         } else {
             const validation = compare(password, user.password)
             if (validation) {
                 let payload = {
-                    id: user.id,
+                    id: user._id,
                     email: user.email
                 }
                 let access_token = generateToken(payload)
@@ -41,6 +43,18 @@ class UserController {
                 return res.status(400).json({msg:'Internal server error'})
             }
         }
+    }
+    static async updateData(req,res) {
+        const params = {
+            email: req.body.email,
+            name: req.body.name
+        }
+        const edit = await User.edit(req.params.id, params)
+        res.status(201).json(edit)
+    }
+    static async getById(req,res) {
+        const getById = await User.getById(req.UserData.id)
+        res.status(200).json(getById)
     }
 }
 
