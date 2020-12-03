@@ -37,7 +37,8 @@ class UserController {
                 return res.status(200).json({
                     access_token: access_token,
                     id: user.id,
-                    email: user.email
+                    email: user.email,
+                    role: user.role
                 })
             } else {
                 return res.status(400).json({msg:'Internal server error'})
@@ -49,11 +50,11 @@ class UserController {
             email: req.body.email,
             name: req.body.name
         }
-        const edit = await User.edit(req.params.id, params)
+        const edit = await User.edit(req.UserData._id, params)
         res.status(201).json(edit)
     }
     static async getById(req,res) {
-        const getById = await User.getById(req.UserData.id)
+        const getById = await User.getById(req.UserData._id)
         res.status(200).json(getById)
     }
 }

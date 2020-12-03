@@ -29,6 +29,7 @@ class InvoiceController {
             earthquake: req.body.earthquake || 'no',
             status: 'checkout',
             customerId: req.UserData._id,
+            policyNumber: 'Belum Terbit'
             // insurancePremium: req.body.insurancePremium
         }
         console.log(params,'create invoice');
@@ -40,15 +41,20 @@ class InvoiceController {
         const checkout = await Invoice.getById(req.params.id)
         console.log(checkout);
         const insuranceParams = await FireInsurance.getByOccupation(checkout.occupation) // should be getById, will fix later if time allows
-        checkout.insurancePremium = ((checkout.propertyPrice * insuranceParams.insuranceRate) / (1000 * checkout.coveragePeriod)) + 10000
+        console.log(insuranceParams);
+        let basePremium = ((checkout.propertyPrice * insuranceParams.insuranceRate) / (1000 * checkout.coveragePeriod))
+        let insurancePremium = basePremium + 10000
+        checkout.basePremium = basePremium
+        checkout.insurancePremium = insurancePremium
         const writeCheckout = await Invoice.edit(req.params.id, checkout)
         res.status(200).json(checkout)
     }
     static async submitCheckout(req,res) {
         const submit = await Invoice.getById(req.params.id)
-        submit.status = 'pending'
+        submit.status = 'Menunggu Persetujuan'
         // submit.insurancePremium = req.body.insurancePremium
-        res.status(200).json(submit)
+        const writeSubmit = await Invoice.edit(req.params.id, submit)
+        res.status(200).json(writeSubmit)
     }
     static async approveRequest(req,res) {
         let request = await Invoice.getById(req.params.id)

@@ -9,8 +9,8 @@ const route = require('express').Router()
 // USER
 route.post('/register', userController.register)
 route.post('/login', userController.login)
-route.get('/user/:id', authentication, customerAuth, userController.getById)
-route.put('/user/:id', authentication, customerAuth, userController.updateData)
+route.get('/user', authentication, customerAuth, userController.getById)
+route.put('/user', authentication, customerAuth, userController.updateData)
 
 // INVOICE
 // Dev
