@@ -29,8 +29,8 @@ export default function Checkout() {
 
     return (
         <Container>
-            <h1 className='text-center'>Checkout</h1>
-            <Table bordered hover>
+            <h1 className='text-center mt-5'>Checkout</h1>
+            <Table bordered hover className='mt-5'>
                 <tbody>
                     <tr>
                         <td>No. Invoice</td>
@@ -50,7 +50,7 @@ export default function Checkout() {
                     </tr>
                     <tr>
                         <td>Harga Properti</td>
-                        <td>{checkout.propertyPrice}</td>
+                        <td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(checkout.propertyPrice)}</td>
                     </tr>
                     <tr>
                         <td>Tipe Konstruksi</td>

@@ -17,8 +17,8 @@ export default function CustomerRequests() {
 
     return (
         <Container>
-            <h1 className='text-center'>Daftar Pengajuan</h1>
-            <Table striped bordered hover>
+            <h1 className='text-center mt-5'>Daftar Pengajuan</h1>
+            <Table striped bordered hover className='mt-5 mb-5'>
                 <thead>
                     <tr>
                         <th>No. Polis</th>

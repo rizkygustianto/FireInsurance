@@ -25,9 +25,9 @@ export default function AdminDashboard() {
 
     return (
         <Container>
-            <h1 className='text-center'>Admin Home</h1>
-            <h2 className='text-center'>Tipe Okupasi Asuransi Kebakaran</h2>
-            <Table striped bordered hover>
+            <h1 className='text-center mt-5'>Admin Home</h1>
+            <h2 className='text-center mt-3'>Tipe Okupasi Asuransi Kebakaran</h2>
+            <Table striped bordered hover className='mt-5'>
                 <thead>
                     <tr>
                         <th>Tipe Okupasi</th>

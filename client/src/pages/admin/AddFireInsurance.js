@@ -29,8 +29,8 @@ export default function AddFireInsurance() {
 
     return (
         <Container>
-            <h1 className='text-center'>Tambah Tipe Okupasi Asuransi Kebakaran</h1>
-            <Form onSubmit={handleSubmit}>
+            <h1 className='text-center mt-5'>Tambah Tipe Okupasi Asuransi Kebakaran</h1>
+            <Form onSubmit={handleSubmit} className='mt-5'>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Tipe Okupasi</Form.Label>
                     <Form.Control type="text" placeholder="eg; Rumah" onChange={(e) => setOccupation(e.target.value)} value={occupation} required />

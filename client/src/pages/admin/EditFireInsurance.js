@@ -41,8 +41,8 @@ export default function EditFireInsurance() {
 
     return (
         <Container>
-            <h1 className='text-center'>Edit Tipe Okupasi Asuransi Kebakaran</h1>
-            <Form onSubmit={handleSubmit}>
+            <h1 className='text-center mt-5'>Edit Tipe Okupasi Asuransi Kebakaran</h1>
+            <Form onSubmit={handleSubmit} className='mt-5' >
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Tipe Okupasi</Form.Label>
                     <Form.Control type="text" placeholder="eg; Rumah" onChange={(e) => setOccupation(e.target.value)} value={occupation} required />

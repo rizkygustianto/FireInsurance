@@ -1,5 +1,6 @@
 const Invoice = require('../models/invoiceModel')
 const FireInsurance = require('../models/fireInsuranceModel')
+const SequenceModel = require('../models/sequenceModel')
 
 class InvoiceController {
     static async getAll(req,res) {
@@ -15,8 +16,10 @@ class InvoiceController {
         res.status(200).json(get)
     }
     static async create(req,res) {
+        const sequence = await SequenceModel.getNextSequenceValue('invoiceNumber')
+        console.log(sequence,'SEQUENCE');
         let params = {
-            invoiceNumber: `K.001.XXXXXX`,
+            invoiceNumber: `K.001.${sequence.value.sequence_value}`,
             coverageType: 'Asuransi Kebakaran',
             coveragePeriod: req.body.coveragePeriod,
             occupation: req.body.occupation,
@@ -57,9 +60,10 @@ class InvoiceController {
         res.status(200).json(writeSubmit)
     }
     static async approveRequest(req,res) {
+        const sequence = await SequenceModel.getNextSequenceValue('policyNumber')
         let request = await Invoice.getById(req.params.id)
         request.status = 'Sudah Dibayar'
-        request.policyNumber = `K.01.001.XXXXXX`
+        request.policyNumber = `K.01.001.${sequence.value.sequence_value}`
         console.log(request, 'approve');
         let approve = await Invoice.edit(req.params.id, request)
         res.status(201).json(approve)

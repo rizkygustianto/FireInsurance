@@ -46,8 +46,8 @@ export default function EditProfile() {
 
     return (
         <Container>
-            <h1 className='text-center'>Edit Profile</h1>
-            <Form onSubmit={handleSubmit}>
+            <h1 className='text-center mt-5'>Edit Profile</h1>
+            <Form onSubmit={handleSubmit} className='mt-5'>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} value={email} required />

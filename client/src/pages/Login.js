@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { login } from '../store/actions/index'
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,6 +11,7 @@ export default function Login() {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const isLogin = useSelector(state => state.isLogin)
     const role = useSelector(state => state.role)
@@ -21,13 +22,19 @@ export default function Login() {
             email,
             password 
         }
-        dispatch(login(payload)) 
+        dispatch(login(payload, (err,role) => {
+            if (!err && role === 'customer') {
+                history.push('/')
+            } else if (!err && role === 'admin') {
+                history.push('/admin')
+            }
+        })) 
     }
 
     return (
         <>
-        {isLogin && role === 'customer' ? <Redirect to="/" /> : null}
-        {isLogin && role === 'admin' ? <Redirect to="/admin" /> : null}
+        {/* {isLogin && role === 'customer' ? <Redirect to="/" /> : null}
+        {isLogin && role === 'admin' ? <Redirect to="/admin" /> : null} */}
         <Container>
             <h1 className='text-center'>Login</h1>
             <Form onSubmit={handleLogin}>

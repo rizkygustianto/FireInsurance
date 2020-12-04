@@ -1,24 +1,28 @@
 import axios from 'axios';
 
-export const login = ({ email, password }) => {
-    return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios.post(
-                'http://localhost:3000/login',
-                {
-                    email,
-                    password,
-                }
-            ).then(({ data }) => {
+export const login = (payload,cb) => {
+    return dispatch => {
+        fetch(`http://localhost:3000/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // access_token: localStorage.getItem('access_token')
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data, 'login action');
                 dispatch({
                     type: 'LOGIN',
                     payload: data
                 })
-                resolve();
-            }).catch((error) => {
-                reject(error);
-            });
-        })
+                cb(null,data.role)
+            })
+            .catch(err => {
+                console.log(err)
+                cb(err,null)
+            })
     }
 }
 

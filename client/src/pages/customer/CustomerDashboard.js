@@ -9,7 +9,7 @@ export default function Home() {
 
     return (
         <Container>
-            <h1 className='text-center'>Home</h1>
+            <h1 className='text-center mt-5'>Home</h1>
         </Container>
     )
 }

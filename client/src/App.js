@@ -29,7 +29,7 @@ function App() {
           <Switch>
             <Route path='/login' component={Login} />
             
-            {localStorage.getItem('role') == 'admin' ? 
+            {localStorage.getItem('role') === 'admin' ? 
               <Route component={adminContainer} />
               :
               <Route component={customerContainer} />

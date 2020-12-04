@@ -49,8 +49,8 @@ export default function RequestForm() {
 
     return (
         <Container>
-            <h1 className='text-center'>Asuransi Kebakaran</h1>
-            <Form onSubmit={handleSubmit}>
+            <h1 className='text-center mt-5'>Asuransi Kebakaran</h1>
+            <Form onSubmit={handleSubmit} className='mt-5 mb-5'>
                 <Form.Group controlId="exampleForm.ControlSelect1">
                     <Form.Label>Tipe Okupansi</Form.Label>
                     <Form.Control as="select" onChange={(e) => setOccupancy(e.target.value)} value={occupancy}>
