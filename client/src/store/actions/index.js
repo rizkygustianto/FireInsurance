@@ -188,93 +188,133 @@ export const getCustomerInvoices = () => {
 
 export const getAdminPendingInvoices = () => {
     return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios.get(`http://localhost:3000/admin/invoice`)
-                .then(({ data }) => {
-                    console.log(data, 'get admin pending invoice');
-                    dispatch({
-                        type: 'UPDATE_ADM_PENDING_INVOICE',
-                        payload: data
-                    })
-                    resolve();
-                }).catch((error) => {
-                    reject(error);
-                });
+        fetch('http://localhost:3000/admin/invoice', {
+            method: 'GET',
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
         })
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                console.log(data, 'get admin pending invoices');
+                dispatch({
+                    type: 'UPDATE_ADM_PENDING_INVOICE',
+                    payload: data
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 }
 
 export const adminApproveRequest = (id) => {
     return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios.get(`http://localhost:3000/admin/invoice/approve/${id}`)
-                .then(({ data }) => {
-                    console.log(data, 'admin approve request');
-                    resolve();
-                }).catch((error) => {
-                    reject(error);
-                });
+        fetch(`http://localhost:3000/admin/invoice/approve/${id}`, {
+            method: 'GET',
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
         })
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                console.log(data, 'admin approve invoice');
+                
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 }
 
 export const adminRejectRequest = (id) => {
     return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios.get(`http://localhost:3000/admin/invoice/reject/${id}`)
-                .then(({ data }) => {
-                    console.log(data, 'admin reject request');
-                    resolve();
-                }).catch((error) => {
-                    reject(error);
-                });
+        fetch(`http://localhost:3000/admin/invoice/reject/${id}`, {
+            method: 'GET',
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
         })
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                console.log(data, 'admin reject invoice');
+                
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 }
 
-export const adminAddInsuranceOccupancy = (payload) => {
-    return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios.post(`http://localhost:3000/admin/insurance/fire`, payload)
-                .then(({ data }) => {
-                    console.log(data, 'admin add occupancy insurance');
-                    resolve();
-                }).catch((error) => {
-                    reject(error);
-                });
+export const adminAddInsuranceOccupancy = (payload,cb) => {
+    return dispatch => {
+        fetch(`http://localhost:3000/admin/insurance/fire`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                access_token: localStorage.getItem('access_token')
+            },
+            body: JSON.stringify(payload)
         })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data, 'added insurance occupation');
+                cb(null)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }
 
 export const adminGetInsuranceOccupancyById = (id) => {
     return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios.get(`http://localhost:3000/admin/insurance/fire/${id}`)
-                .then(({ data }) => {
-                    console.log(data, 'admin get insurance by id');
-                    dispatch({
-                        type: 'UPDATE_ADM_EDIT_INSURANCE_BYID',
-                        payload: data
-                    })
-                    resolve();
-                }).catch((error) => {
-                    reject(error);
-                });
+        fetch(`http://localhost:3000/admin/insurance/fire/${id}`, {
+            method: 'GET',
+            headers: {
+                access_token: localStorage.getItem('access_token')
+            }
         })
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                console.log(data, 'get insurance by id');
+                dispatch({
+                    type: 'UPDATE_ADM_EDIT_INSURANCE_BYID',
+                    payload: data
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 }
 
-export const adminEditInsuranceOccupancyById = (id, payload) => {
-    return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios.post(`http://localhost:3000/admin/insurance/fire/${id}`, payload)
-                .then(({ data }) => {
-                    console.log(data, 'admin edit insurance by id');
-                    resolve();
-                }).catch((error) => {
-                    reject(error);
-                });
+export const adminEditInsuranceOccupancyById = (id, payload, cb) => {
+    return dispatch => {
+        fetch(`http://localhost:3000/admin/insurance/fire/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                access_token: localStorage.getItem('access_token')
+            },
+            body: JSON.stringify(payload)
         })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data, 'edited insurance occupation');
+                cb(null)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }
 

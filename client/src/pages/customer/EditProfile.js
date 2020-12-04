@@ -15,12 +15,16 @@ export default function EditProfile() {
     const [name, setName] = useState('')
 
     const user = useSelector(state => state.userProfile)
+
+    // let userTemp = {}
     
     useEffect(() => {
         dispatch(getUserProfile())
     }, [])
 
     useEffect(() => {
+        // userTemp = user
+        // console.log(userTemp, 'payload edit');
         setName(user.name)
         setEmail(user.email)
     }, [user])
@@ -28,8 +32,10 @@ export default function EditProfile() {
     function handleSubmit(event) {
         event.preventDefault()
         let payload = {
+            name,
             email,
-            name
+            password: user.password,
+            role: user.role
         }
         dispatch(editUserProfile(payload,(err) => {
             if (!err) {

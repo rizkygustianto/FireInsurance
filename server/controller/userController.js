@@ -22,8 +22,9 @@ class UserController {
     }
     static async login(req,res) {
         let { email,password } = req.body
+        console.log(email,password,'login');
         let user = await User.getByEmail(email)
-        console.log(user);
+        console.log(user, 'login');
         if (!user) {
             return res.status(401).json({msg: 'Invalid email/password'})
         } else {
@@ -46,11 +47,12 @@ class UserController {
         }
     }
     static async updateData(req,res) {
-        const params = {
-            email: req.body.email,
-            name: req.body.name
-        }
-        const edit = await User.edit(req.UserData._id, params)
+        // const params = {
+        //     email: req.body.email,
+        //     name: req.body.name
+        // }
+        console.log(req.body, 'update bio backend');
+        const edit = await User.edit(req.UserData._id, req.body)
         res.status(201).json(edit)
     }
     static async getById(req,res) {

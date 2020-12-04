@@ -14,7 +14,7 @@ export default function RequestForm() {
     const occupancyType = useSelector(state => state.occupancyType)
 
     const [occupancy, setOccupancy] = useState('')
-    const [period, setPeriod] = useState(0)
+    const [period, setPeriod] = useState(1)
     const [propertyPrice, setPropertyPrice] = useState(0)
     const [construction, setConstruction] = useState(0)
     const [address, setAddress] = useState('')

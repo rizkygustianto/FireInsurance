@@ -7,7 +7,7 @@ class invoiceModel {
         return invoice.find().toArray()
     }
     static findAllPending() {
-        return invoice.find({ status: 'pending' }).toArray()
+        return invoice.find({ status: 'Menunggu Persetujuan' }).toArray()
     }
     static findAllCustomer(id) {
         return invoice.find({ customerId: ObjectId(id) }).toArray()

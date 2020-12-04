@@ -27,7 +27,7 @@ route.get('/admin/invoice/reject/:id', authentication, adminAuth, InvoiceControl
 
 // FIRE INSURANCE
 // Customer
-route.get('/insurance/fire', authentication, customerAuth, FireInsuranceController.getAll)
+route.get('/insurance/fire', authentication, FireInsuranceController.getAll)
 // Admin
 route.get('/admin/insurance/fire', authentication, adminAuth, FireInsuranceController.getAll)
 route.post('/admin/insurance/fire', authentication, adminAuth, FireInsuranceController.add)

@@ -15,7 +15,7 @@ function reducer(state = initialState, action) {
     switch (action.type) {
         case 'LOGIN':
             localStorage.setItem('access_token', action.payload.access_token)
-            localStorage.setItem('username', action.payload.username)
+            localStorage.setItem('role', action.payload.role)
             let newState = {
                 ...state,
                 isLogin: true,
@@ -26,6 +26,7 @@ function reducer(state = initialState, action) {
 
         case 'LOGOUT':
             localStorage.removeItem('access_token')
+            localStorage.removeItem('role')
             return {
                 ...state,
                 isLogin: false,

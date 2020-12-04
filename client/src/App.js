@@ -13,6 +13,11 @@ import RequestForm from './pages/customer/RequestForm';
 import CustomerRequests from './pages/customer/MyRequest';
 import EditProfile from './pages/customer/EditProfile'
 import Checkout from './pages/customer/Checkout';
+import AdminNavbar from './component/adminNavbar';
+import AdminDashboard from './pages/admin/AdminDashboard'
+import PendingRequests from './pages/admin/PendingRequests';
+import AddFireInsurance from './pages/admin/AddFireInsurance';
+import EditFireInsurance from './pages/admin/EditFireInsurance';
 
 function App() {
 
@@ -24,12 +29,11 @@ function App() {
           <Switch>
             <Route path='/login' component={Login} />
             
-            {/* Customer */}
-
-            <Route component={customerContainer} />
-
-            {/* Admin */}
-            <Route component={adminContainer} />
+            {localStorage.getItem('role') == 'admin' ? 
+              <Route component={adminContainer} />
+              :
+              <Route component={customerContainer} />
+            }
 
           </Switch>
         </Router>
@@ -40,10 +44,19 @@ function App() {
   function adminContainer() {
     return (
       <div>
-        {/* <Route path='/admin' component={} />
-        <Route path='/admin/pending' component={} />
-        <Route path='/admin/add-insurance' component={} />
-        <Route path='/admin/edit-insurance/:id' component={} /> */}
+        <AdminNavbar />
+        <AdminRoute path='/admin' exact>
+          <AdminDashboard />
+        </AdminRoute>
+        <AdminRoute path='/admin/pending'>
+          <PendingRequests />
+        </AdminRoute>
+        <AdminRoute path='/admin/add'>
+          <AddFireInsurance />
+        </AdminRoute>
+        <AdminRoute path='/admin/insurance/fire/:id'>
+          <EditFireInsurance />
+        </AdminRoute>
       </div>
     )
   }
@@ -67,24 +80,33 @@ function App() {
         <PrivateRoute path='/checkout/:id'>
           <Checkout />
         </PrivateRoute>
-        {/* <PrivateRoute path='/request-form' exact>
-          
-        </PrivateRoute>
-        <PrivateRoute path='/checkout/:id' exact>
-          
-        </PrivateRoute>
-        <PrivateRoute path='/my-request' exact>
-          
-        </PrivateRoute>
-        <PrivateRoute path='/bio' exact>
-          
-        </PrivateRoute> */}
     </div>
     )
   }
 }
 
 function PrivateRoute({ children, ...rest }) {
+  useSelector((state) => state.isLogin)
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        localStorage.getItem('access_token') ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
+function AdminRoute({ children, ...rest }) {
   useSelector((state) => state.isLogin)
   return (
     <Route
